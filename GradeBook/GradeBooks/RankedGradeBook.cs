@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 
 namespace GradeBook.GradeBooks
 {
     public class RankedGradeBook : BaseGradeBook
     {
+        private string ExceptionMessage = "Ranked grading requires at least 5 students";
+
         public RankedGradeBook(string name) : base(name)
         {
             Type = Enums.GradeBookType.Ranked;
@@ -13,9 +16,9 @@ namespace GradeBook.GradeBooks
 
         public override char GetLetterGrade(double averageGrade)
         {
-            if (Students.Count < 5)
+            if (Students.Count() < 5)
             {
-                throw new InvalidOperationException("You must have at least 5 students to do ranked grading.");
+                throw new InvalidOperationException(ExceptionMessage);
             }
 
             // Get first 20% group from all students
@@ -31,9 +34,10 @@ namespace GradeBook.GradeBooks
 
         public override void CalculateStatistics()
         {
-            if (Students.Count < 5)
+            if (Students.Count() < 5)
             {
-                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                Console.WriteLine(ExceptionMessage);
+                return;
             }
 
             base.CalculateStatistics();
@@ -41,10 +45,12 @@ namespace GradeBook.GradeBooks
 
         public override void CalculateStudentStatistics(string name)
         {
-            if (Students.Count < 5)
+            if (Students.Count() < 5)
             {
-                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                Console.WriteLine(ExceptionMessage);
+                return;
             }
+
             base.CalculateStudentStatistics(name);
         }
 
