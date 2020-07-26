@@ -1,8 +1,8 @@
 ﻿namespace GradeBook.GradeBooks
 {
-    class StandardGradeBooks : BaseGradeBook
+    class StandardGradeBook : BaseGradeBook
     {
-        public StandardGradeBooks(string name) : base(name)
+        public StandardGradeBook(string name) : base(name)
         {
             Type = Enums.GradeBookType.Standard;
         }
